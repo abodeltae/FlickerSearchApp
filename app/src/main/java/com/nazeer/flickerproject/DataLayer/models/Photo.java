@@ -13,6 +13,10 @@ public class Photo {
         this.secret = secret;
     }
 
+    public  String getUrl (){
+        return String.format("https://farm%d.staticflickr.com/%s/%s_%s.jpg",farm,serverId,id,secret);
+    }
+
     public String getId() {
         return id;
     }

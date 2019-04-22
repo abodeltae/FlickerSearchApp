@@ -28,6 +28,7 @@ public class NetworkAsyncTask<Res> extends AsyncTask<Void, Void, WebRequestResul
 
     @Override
     protected void onPostExecute(WebRequestResult<Res> res) {
+        if(callBack.isCanceled())return;
         if(res.isSuccessful()){
             callBack.onSuccess(res.getResult());
         }else {

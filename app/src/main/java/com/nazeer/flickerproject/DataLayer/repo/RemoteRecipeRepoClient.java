@@ -8,14 +8,14 @@ import com.nazeer.flickerproject.DataLayer.models.PhotoListResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RemoteRecipeRepoClient implements RecipeRepoClient {
+public class RemoteRecipeRepoClient implements PhotosRepoClient {
 
     private static final Object API_METHOD = "flickr.photos.search";
     private final String api_key;
     private final AsyncHttpClient httpClient;
     private final PhotosListResponseProcessor processor;
     private final String baseUrl;
-    private final Map<String, Object> staticParams = getStaticParamsMap();
+    private  Map<String, Object> staticParams ;
 
     private static final String PAGE_KEY = "page";
     private static final String QUERY_KEY = "text";
@@ -26,10 +26,11 @@ public class RemoteRecipeRepoClient implements RecipeRepoClient {
         this.processor = processor;
         this.baseUrl = baseUrl;
         this.api_key = apiKey;
+        staticParams = getStaticParamsMap();
     }
 
     @Override
-    public void getRecipes(int page, String query, SuccessFailureCallBack<PhotoListResponse> callBack) {
+    public void getPhotos(long page, String query, SuccessFailureCallBack<PhotoListResponse> callBack) {
         HashMap<String, Object> map = new HashMap<>(staticParams);
         map.put(PAGE_KEY, page);
         map.put(QUERY_KEY, query);

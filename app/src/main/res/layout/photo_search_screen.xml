@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.widget.RelativeLayout">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/photo_search_screen_query_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:queryHint="@string/search_hint"
+        app:iconifiedByDefault="false"
+
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/photo_search_screen_photos_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/photo_search_screen_query_progress_bar"
+        android:layout_below="@+id/photo_search_screen_query_search_view" />
+
+    <ProgressBar
+        android:id="@+id/photo_search_screen_query_load_more_progress_bar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/photo_search_screen_query_progress_bar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</merge>

@@ -5,6 +5,6 @@ import com.nazeer.flickerproject.DataLayer.models.PhotoListResponse;
 
 import java.util.List;
 
-public interface RecipeRepo {
-	void getPhotos(int page, String query, SuccessFailureCallBack<PhotoListResponse> callBack);
+public interface PhotosRepo {
+	void getPhotos(long page, String query, SuccessFailureCallBack<PhotoListResponse> callBack);
 }
