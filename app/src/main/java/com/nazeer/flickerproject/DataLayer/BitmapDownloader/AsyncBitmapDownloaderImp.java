@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class BitmapDownloaderImp implements BitmapDownloader {
+public class AsyncBitmapDownloaderImp implements AsyncBitmapDownloader {
 
 
     @Override

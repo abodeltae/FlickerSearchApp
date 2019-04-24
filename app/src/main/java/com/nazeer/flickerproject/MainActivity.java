@@ -11,16 +11,18 @@ import com.nazeer.flickerproject.photosearch.SearchPhotosContract;
 public class MainActivity extends AppCompatActivity {
 
     private SearchPhotosContract.Presenter presenter;
-    private PhotoSearchView photoSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        photoSearchView = new PhotoSearchView(this);
+        PhotoSearchView photoSearchView = new PhotoSearchView(this);
         setContentView(photoSearchView);
         presenter = (SearchPhotosContract.Presenter) getLastCustomNonConfigurationInstance();
         if(presenter == null){
-            presenter = DependenciesManager.createPhotoSearchPresenter(photoSearchView);
+            presenter = DependenciesManager.getINSTANCE().createPhotoSearchPresenter(photoSearchView);
+        }else{
+            presenter.setView(photoSearchView);
+            presenter.restore();
         }
 
     }

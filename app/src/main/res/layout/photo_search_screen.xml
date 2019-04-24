@@ -17,7 +17,7 @@
         android:id="@+id/photo_search_screen_photos_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/photo_search_screen_query_progress_bar"
+        android:layout_above="@+id/photo_search_screen_query_load_more_progress_bar"
         android:layout_below="@+id/photo_search_screen_query_search_view" />
 
     <ProgressBar

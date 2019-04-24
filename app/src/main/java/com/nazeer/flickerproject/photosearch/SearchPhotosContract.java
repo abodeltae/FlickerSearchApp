@@ -1,12 +1,15 @@
 package com.nazeer.flickerproject.photosearch;
 
 import com.nazeer.flickerproject.DataLayer.models.Photo;
+import com.nazeer.flickerproject.MainActivity;
 
 import java.util.List;
 
 public class SearchPhotosContract {
     public interface Presenter {
+        void restore();
 
+        void setView(View view);
     }
 
     public interface View {
@@ -18,7 +21,7 @@ public class SearchPhotosContract {
 
         void hideLoadingMore();
 
-        void appendPhotos(List<Photo> photoList);
+        void showPhotos(List<Photo> photoList);
 
         void clearPhotos();
 
