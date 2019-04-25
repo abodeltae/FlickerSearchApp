@@ -9,7 +9,7 @@ import com.nazeer.flickerproject.DataLayer.httpClient.AsyncHttpClientImp;
 import com.nazeer.flickerproject.DataLayer.repo.PhotosRepo;
 import com.nazeer.flickerproject.DataLayer.repo.PhotosRepoClient;
 import com.nazeer.flickerproject.DataLayer.repo.PhotosRepoImp;
-import com.nazeer.flickerproject.DataLayer.repo.RemoteRecipeRepoClient;
+import com.nazeer.flickerproject.DataLayer.repo.RemotePhotosRepoClient;
 import com.nazeer.flickerproject.imageLoader.Cache;
 import com.nazeer.flickerproject.imageLoader.ImageLoader;
 import com.nazeer.flickerproject.imageLoader.ImageLoaderImpl;
@@ -38,7 +38,7 @@ public class DependenciesManager {
         DataLayerConfigs dataLayerConfigs =new DataLayerConfigs();
         AsyncHttpClient httpClient = new AsyncHttpClientImp();
         PhotosListResponseProcessor processor =new PhotosListResponseProcessor();
-        PhotosRepoClient remoteClient = new RemoteRecipeRepoClient(dataLayerConfigs.getApiKey(),httpClient,processor, dataLayerConfigs.getBaseUrl());
+        PhotosRepoClient remoteClient = new RemotePhotosRepoClient(dataLayerConfigs.getApiKey(),httpClient,processor, dataLayerConfigs.getBaseUrl());
         repo = new PhotosRepoImp(remoteClient);
         return repo;
     }

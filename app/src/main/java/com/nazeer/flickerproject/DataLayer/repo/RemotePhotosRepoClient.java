@@ -8,7 +8,7 @@ import com.nazeer.flickerproject.DataLayer.models.PhotoListResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RemoteRecipeRepoClient implements PhotosRepoClient {
+public class RemotePhotosRepoClient implements PhotosRepoClient {
 
     private static final Object API_METHOD = "flickr.photos.search";
     private final String api_key;
@@ -21,7 +21,7 @@ public class RemoteRecipeRepoClient implements PhotosRepoClient {
     private static final String QUERY_KEY = "text";
 
 
-    public RemoteRecipeRepoClient(String apiKey, AsyncHttpClient httpClient, PhotosListResponseProcessor processor, String baseUrl) {
+    public RemotePhotosRepoClient(String apiKey, AsyncHttpClient httpClient, PhotosListResponseProcessor processor, String baseUrl) {
         this.httpClient = httpClient;
         this.processor = processor;
         this.baseUrl = baseUrl;
