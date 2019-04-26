@@ -1,15 +1,20 @@
 package com.nazeer.flickerproject.photosearch;
 
+import android.os.Bundle;
+
 import com.nazeer.flickerproject.DataLayer.models.Photo;
-import com.nazeer.flickerproject.MainActivity;
 
 import java.util.List;
 
 public class SearchPhotosContract {
     public interface Presenter {
-        void restore();
+        void restoreUi();
 
         void setView(View view);
+
+        void onSaveInstanceState(Bundle outState);
+
+        void onRestoreState(Bundle savedState);
     }
 
     public interface View {
@@ -30,6 +35,8 @@ public class SearchPhotosContract {
         void showInvalidQueryError();
 
         void showErrorFetchingData();
+
+        void setQuery(String currentQuery);
     }
 
     public interface delegates {

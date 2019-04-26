@@ -8,7 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +24,7 @@ public class PhotoSearchView extends RelativeLayout implements SearchPhotosContr
     private SearchPhotosContract.delegates delegates;
     private final ArrayList<Photo> displayedPhotos = new ArrayList<>();
     private  PhotosAdapter adapter;
+    private SearchView searchView;
 
     public PhotoSearchView(Context context) {
         super(context);
@@ -43,7 +43,7 @@ public class PhotoSearchView extends RelativeLayout implements SearchPhotosContr
 
     void init(Context context){
         LayoutInflater.from(context).inflate(R.layout.photo_search_screen,this);
-        SearchView searchView = findViewById(R.id.photo_search_screen_query_search_view);
+        searchView = findViewById(R.id.photo_search_screen_query_search_view);
         searchView.setOnQueryTextListener(this);
         searchView.setSubmitButtonEnabled(true);
         loadingMoreProgressBar = findViewById(R.id.photo_search_screen_query_load_more_progress_bar);
@@ -116,9 +116,14 @@ public class PhotoSearchView extends RelativeLayout implements SearchPhotosContr
     }
 
     @Override
+    public void setQuery(String currentQuery) {
+        searchView.setQuery(currentQuery, false);
+    }
+
+    @Override
     public boolean onQueryTextSubmit(String query) {
-         delegates.search(query);
-         return true;
+        delegates.search(query);
+        return true;
     }
 
     @Override

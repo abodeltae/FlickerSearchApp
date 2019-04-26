@@ -1,51 +1,55 @@
 package com.nazeer.flickerproject.DataLayer.models;
 
-public class Photo {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Photo implements Parcelable {
    private String id;
     private String serverId;
-    private int farm;
-    private String secret;
+    public static final Creator<Photo> CREATOR = new Creator<Photo>() {
+        @Override
+        public Photo createFromParcel(Parcel in) {
+            return new Photo(in);
+        }
 
-    public Photo(String id, String serverId, int farm, String secret) {
+        @Override
+        public Photo[] newArray(int size) {
+            return new Photo[size];
+        }
+    };
+    private String secret;
+    private String farm;
+
+    public Photo(String id, String serverId, String farm, String secret) {
         this.id = id;
         this.serverId = serverId;
         this.farm = farm;
         this.secret = secret;
+    }
+
+    private Photo(Parcel in) {
+        id = in.readString();
+        serverId = in.readString();
+        farm = in.readString();
+        secret = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(serverId);
+        dest.writeString(farm);
+        dest.writeString(secret);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public  String getUrl (){
-        return String.format("https://farm%d.staticflickr.com/%s/%s_%s.jpg",farm,serverId,id,secret);
+        return String.format("https://farm%s.staticflickr.com/%s/%s_%s.jpg", farm, serverId, id, secret);
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getServerId() {
-        return serverId;
-    }
-
-    public void setServerId(String serverId) {
-        this.serverId = serverId;
-    }
-
-    public int getFarm() {
-        return farm;
-    }
-
-    public void setFarm(int farm) {
-        this.farm = farm;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
 }

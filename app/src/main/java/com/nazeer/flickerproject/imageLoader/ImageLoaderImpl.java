@@ -22,7 +22,7 @@ public class ImageLoaderImpl implements ImageLoader {
     private HashMap<String, ImageView> urlToImageViewMap = new HashMap<>();
     private static final String TAG = "ImageLoaderImpl";
     private LinkedList<LoadRequest> requestsHolder = new LinkedList<>();
-    int runningDownloadsCount = 0;
+    private int runningDownloadsCount = 0;
 
     public ImageLoaderImpl(Cache cache, AsyncBitmapDownloader asyncBitmapDownloader) {
         this.cache = cache;
@@ -65,17 +65,20 @@ public class ImageLoaderImpl implements ImageLoader {
                     target.setImageBitmap(data);
                     removeFromMaps(target, url);
                 }
-                Log.w(TAG, String.format("on Success and i currently have %d mapped Images and %d mapped urls", imageViewToUrlMap.size(), urlToImageViewMap.size()));
+                if (imageViewToUrlMap.size() != urlToImageViewMap.size()) {
+                    Log.w(TAG, String.format("on Success and i currently have different sizes for mappings this could be a leak :  %d mapped Images and %d mapped urls", imageViewToUrlMap.size(), urlToImageViewMap.size()));
+                }
                 runningDownloadsCount--;
                 popRequests();
             }
-
             @Override
             public void onFail(Throwable throwable) {
                 Log.w(TAG, "failed to download image for url : " + url);
                 ImageView target = urlToImageViewMap.get(url);
                 removeFromMaps(target, url);
-                Log.w(TAG, String.format("on fail and i currently have %d mapped Images and %d mapped urls", imageViewToUrlMap.size(), urlToImageViewMap.size()));
+                if (imageViewToUrlMap.size() != urlToImageViewMap.size()) {
+                    Log.w(TAG, String.format("on fail and i currently have different sizes for mappings this could be a leak :  %d mapped Images and %d mapped urls", imageViewToUrlMap.size(), urlToImageViewMap.size()));
+                }
                 runningDownloadsCount--;
                 popRequests();
             }
