@@ -12,6 +12,7 @@ import com.nazeer.flickerproject.DataLayer.BitmapDownloader.AsyncBitmapDownloade
 import com.nazeer.flickerproject.DataLayer.models.Photo;
 import com.nazeer.flickerproject.imageLoader.Cache;
 import com.nazeer.flickerproject.imageLoader.ImageLoaderImpl;
+import com.nazeer.flickerproject.imageLoader.InMemoryLRUCache;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +55,7 @@ public class PhotoSearchTest {
      * Assure that image loader respects given limit of concurrent downloads
      **/
     @Test
-    public void testImageLoaderMaximumConcurentDownloads() {
+    public void testImageLoaderMaximumConcurrentDownloads() {
         Context appContext = androidx.test.core.app.ApplicationProvider.getApplicationContext();
         int maxRunning = 10;
         int allowedToComplete = 2;
@@ -67,12 +68,12 @@ public class PhotoSearchTest {
         Cache cache = new Cache() {
             @Nullable
             @Override
-            public Bitmap getPhoto(String key) {
+            public Bitmap get(String key) {
                 return null;
             }
 
             @Override
-            public void cachePhoto(String key, Bitmap bitmap) {
+            public void put(String key, Bitmap bitmap) {
 
             }
         };
@@ -105,6 +106,26 @@ public class PhotoSearchTest {
         assertEquals("image loader fired  more or less  tasks than that it should", maxRunning + allowedToComplete, requestedDownloads.count);
 
     }
+
+    @Test
+    public void testInMemoryCache() {
+        InMemoryLRUCache cache = new InMemoryLRUCache(3);
+        Bitmap.Config config = Bitmap.Config.ALPHA_8;
+        Bitmap bitmap = Bitmap.createBitmap(2, 2, config);
+        cache.put("key1", bitmap);
+        cache.put("key2", bitmap);
+        cache.put("key3", bitmap);
+        cache.put("key4", bitmap);
+        assertFalse("cache contains item that should've been pushed out due to lru rules and capacity", cache.contains("key1"));
+        cache.get("key2");
+        cache.put("key5", null);// this a hacky test to test how the cache behaves for cleared soft references
+        assertFalse("cache didn't reorder item as it was accessed", cache.contains("key3"));
+        assertTrue("cache doesn't contain last item inserted ", cache.contains("key5"));
+        cache.get("key5");
+        assertFalse("cache didn't remove accessed item that had null value", cache.contains("key5"));
+    }
+
+
 
     static class Counter {
         int count = 0;

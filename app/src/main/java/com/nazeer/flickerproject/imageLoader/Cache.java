@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 public interface Cache {
 
     @Nullable
-    Bitmap getPhoto(String key );
+    Bitmap get(String key);
 
-    void cachePhoto (String key , Bitmap bitmap);
+    void put(String key, Bitmap bitmap);
 }

@@ -13,7 +13,7 @@ import com.nazeer.flickerproject.DataLayer.repo.RemotePhotosRepoClient;
 import com.nazeer.flickerproject.imageLoader.Cache;
 import com.nazeer.flickerproject.imageLoader.ImageLoader;
 import com.nazeer.flickerproject.imageLoader.ImageLoaderImpl;
-import com.nazeer.flickerproject.imageLoader.InMemoryCache;
+import com.nazeer.flickerproject.imageLoader.InMemoryLRUCache;
 import com.nazeer.flickerproject.photosearch.PhotoSearchPresenter;
 import com.nazeer.flickerproject.photosearch.SearchPhotosContract;
 
@@ -22,7 +22,7 @@ public class DependenciesManager {
     private  static DependenciesManager INSTANCE ;
     private DependenciesManager (){}
 
-    public static DependenciesManager getINSTANCE() {
+    static DependenciesManager getINSTANCE() {
         if(INSTANCE == null){
             INSTANCE = new DependenciesManager();
         }
@@ -45,13 +45,13 @@ public class DependenciesManager {
 
     public static ImageLoader getImageLoader(){
         if(imageLoader != null) return imageLoader;
-        Cache cache = new InMemoryCache();
+        Cache cache = new InMemoryLRUCache();
         AsyncBitmapDownloader asyncBitmapDownloader = new AsyncBitmapDownloaderImp();
          imageLoader = new ImageLoaderImpl(cache, asyncBitmapDownloader);
         return imageLoader;
     }
 
-    public  SearchPhotosContract.Presenter createPhotoSearchPresenter(SearchPhotosContract.View view) {
+    SearchPhotosContract.Presenter createPhotoSearchPresenter(SearchPhotosContract.View view) {
         return new PhotoSearchPresenter(view,getPhotosRepo());
     }
 }

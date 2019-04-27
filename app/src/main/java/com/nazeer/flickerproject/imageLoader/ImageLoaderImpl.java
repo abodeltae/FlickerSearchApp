@@ -38,7 +38,7 @@ public class ImageLoaderImpl implements ImageLoader {
 
     public void displayImage(ImageView imageView, @DrawableRes int placeHolderRes, String url) {
         invalidateMaps(imageView, url);
-        Bitmap cached = cache.getPhoto(url);
+        Bitmap cached = cache.get(url);
         if (cached != null) {
             imageView.setImageBitmap(cached);
             removeFromMaps(imageView, url);
@@ -65,7 +65,7 @@ public class ImageLoaderImpl implements ImageLoader {
         asyncBitmapDownloader.getBitMapFromUrl(url, new SuccessFailureCallBack<Bitmap>() {
             @Override
             public void onSuccess(Bitmap data) {
-                cache.cachePhoto(url, data);
+                cache.put(url, data);
                 ImageView target = urlToImageViewMap.get(url);
                 if (target != null) {
                     target.setImageBitmap(data);

@@ -3,14 +3,20 @@ package com.nazeer.flickerproject;
 import com.nazeer.flickerproject.DataLayer.JsonProcessors.PhotosListResponseProcessor;
 import com.nazeer.flickerproject.DataLayer.models.Photo;
 import com.nazeer.flickerproject.DataLayer.models.PhotoListResponse;
+import com.nazeer.flickerproject.DataLayer.repo.PhotosRepo;
+import com.nazeer.flickerproject.photosearch.PhotoSearchPresenter;
+import com.nazeer.flickerproject.photosearch.SearchPhotosContract;
 
 import org.json.JSONException;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 
 public class PhotoSearchJunitTest {
     @Test
@@ -27,6 +33,82 @@ public class PhotoSearchJunitTest {
         PhotoListResponse response = new PhotoListResponse(81318, 1, photos);
         PhotoListResponse parsed = new PhotosListResponseProcessor().process(jsonText);
         assertEquals(response, parsed);
+    }
+
+    @Test
+    public void testPresenterLoadMoreBehaviour() {
+        ObjectHolder<SearchPhotosContract.delegates> delegatesObjectHolder = new ObjectHolder<>();
+        Counter requestedLoadMore = new Counter();
+
+        SearchPhotosContract.View view = new SearchPhotosContract.View() {
+            @Override
+            public void showLoading() {
+
+            }
+
+            @Override
+            public void hideLoading() {
+
+            }
+
+            @Override
+            public void showLoadingMore() {
+
+            }
+
+            @Override
+            public void showPhotos(List<Photo> photoList) {
+
+            }
+
+            @Override
+            public void clearPhotos() {
+
+            }
+
+            @Override
+            public void setDelegates(SearchPhotosContract.delegates delegates) {
+                delegatesObjectHolder.object = delegates;
+            }
+
+            @Override
+            public void showInvalidQueryError() {
+
+            }
+
+            @Override
+            public void showErrorFetchingData() {
+
+            }
+
+            @Override
+            public void setQuery(String currentQuery) {
+
+            }
+        };
+        PhotosRepo repo = (page, query, callBack) -> {
+            if (page == 1) {
+                PhotoListResponse response = new PhotoListResponse(15, 1, Collections.emptyList());
+                callBack.onSuccess(response);
+            }
+            if (page > 1) requestedLoadMore.count++;
+
+        };
+        PhotoSearchPresenter presenter = new PhotoSearchPresenter(view, repo);
+        delegatesObjectHolder.object.search("kittens");
+        delegatesObjectHolder.object.loadMore();
+        delegatesObjectHolder.object.loadMore();
+        assertNotEquals("load more wasn't fired ", 0, requestedLoadMore.count);
+        assertFalse("more than one load more requests fired ", requestedLoadMore.count > 1);
+
+    }
+
+    static class ObjectHolder<T> {
+        T object;
+    }
+
+    static class Counter {
+        int count = 0;
     }
 
 }
