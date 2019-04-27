@@ -14,7 +14,7 @@ import java.util.LinkedList;
 
 public class ImageLoaderImpl implements ImageLoader {
 
-    private static final int MAX_ALLOWED_DOWNLOAD_REQUESTS = 15;
+    private static final int DEFAULT_MAX_ALLOWED_DOWNLOAD_REQUESTS = 15;
     private final Cache cache;
     private final AsyncBitmapDownloader asyncBitmapDownloader;
     // these maps map to images and urls for current downloads
@@ -23,10 +23,16 @@ public class ImageLoaderImpl implements ImageLoader {
     private static final String TAG = "ImageLoaderImpl";
     private LinkedList<LoadRequest> requestsHolder = new LinkedList<>();
     private int runningDownloadsCount = 0;
+    private int maxAllowedRunningDownloads;
 
     public ImageLoaderImpl(Cache cache, AsyncBitmapDownloader asyncBitmapDownloader) {
+        this(cache, asyncBitmapDownloader, DEFAULT_MAX_ALLOWED_DOWNLOAD_REQUESTS);
+    }
+
+    public ImageLoaderImpl(Cache cache, AsyncBitmapDownloader asyncBitmapDownloader, int maxAllowedRunningDownloads) {
         this.cache = cache;
         this.asyncBitmapDownloader = asyncBitmapDownloader;
+        this.maxAllowedRunningDownloads = maxAllowedRunningDownloads;
     }
 
 
@@ -39,9 +45,9 @@ public class ImageLoaderImpl implements ImageLoader {
 
         } else {
             imageView.setImageResource(placeHolderRes);
-            if (runningDownloadsCount >= MAX_ALLOWED_DOWNLOAD_REQUESTS) {
+            if (runningDownloadsCount >= maxAllowedRunningDownloads) {
                 requestsHolder.add(new LoadRequest(imageView, url, placeHolderRes));
-                if (requestsHolder.size() > MAX_ALLOWED_DOWNLOAD_REQUESTS) {
+                if (requestsHolder.size() > maxAllowedRunningDownloads) {
                     requestsHolder.removeLast();
                 }
             } else {
@@ -86,7 +92,7 @@ public class ImageLoaderImpl implements ImageLoader {
     }
 
     private void popRequests() {
-        int toPop = MAX_ALLOWED_DOWNLOAD_REQUESTS - runningDownloadsCount;
+        int toPop = maxAllowedRunningDownloads - runningDownloadsCount;
         for (int i = 0; i < toPop && !requestsHolder.isEmpty(); i++) {
             LoadRequest request = requestsHolder.pollLast();
             showFromWeb(request.getImageView(), request.getUrl(), request.getResId());

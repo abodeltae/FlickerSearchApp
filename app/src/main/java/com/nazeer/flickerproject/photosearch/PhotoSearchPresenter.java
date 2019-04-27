@@ -1,8 +1,6 @@
 package com.nazeer.flickerproject.photosearch;
 
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.nazeer.flickerproject.CallBacks.SuccessFailureCallBack;
@@ -47,7 +45,7 @@ public class PhotoSearchPresenter implements SearchPhotosContract.Presenter {
 
             @Override
             public void loadMore() {
-                Log.i(TAG, "loading more for query " + currentQuery + "with page " + (currentPage + 1));
+                Log.i(TAG, "loading more for query " + currentQuery + " with page " + (currentPage + 1));
                 if (runningRequestCallback != null) return;
                 if (totalPages > currentPage) {
                     view.showLoadingMore();
@@ -73,13 +71,13 @@ public class PhotoSearchPresenter implements SearchPhotosContract.Presenter {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(SAVED_STATE_KEY, new State(photos, currentPage, totalPages, currentQuery));
+        outState.putParcelable(SAVED_STATE_KEY, new PersistenceState(photos, currentPage, totalPages, currentQuery));
     }
 
     @Override
     public void onRestoreState(Bundle savedState) {
         Log.i(TAG, "restoring state ");
-        State state = savedState.getParcelable(SAVED_STATE_KEY);
+        PersistenceState state = savedState.getParcelable(SAVED_STATE_KEY);
         if (state != null && state.currentQuery != null && state.photos.size() > 0) {
 
 
@@ -105,14 +103,12 @@ public class PhotoSearchPresenter implements SearchPhotosContract.Presenter {
                 photos.addAll(data.getPhotos());
                 view.showPhotos(photos);
                 view.hideLoading();
-                view.hideLoadingMore();
                 runningRequestCallback = null;
             }
 
             @Override
             public void onFail(Throwable throwable) {
                 view.hideLoading();
-                view.hideLoadingMore();
                 view.showErrorFetchingData();
                 runningRequestCallback = null;
             }
@@ -120,48 +116,4 @@ public class PhotoSearchPresenter implements SearchPhotosContract.Presenter {
         return runningRequestCallback;
     }
 
-    private static class State implements Parcelable {
-        public static final Creator<State> CREATOR = new Creator<State>() {
-            @Override
-            public State createFromParcel(Parcel in) {
-                return new State(in);
-            }
-
-            @Override
-            public State[] newArray(int size) {
-                return new State[size];
-            }
-        };
-        private final ArrayList<Photo> photos;
-        private final long currentPage;
-        private final long totalPages;
-        private final String currentQuery;
-
-        State(ArrayList<Photo> photos, long currentPage, long totalPages, String currentQuery) {
-            this.photos = photos;
-            this.currentPage = currentPage;
-            this.totalPages = totalPages;
-            this.currentQuery = currentQuery;
-        }
-
-        State(Parcel in) {
-            photos = in.createTypedArrayList(Photo.CREATOR);
-            currentPage = in.readLong();
-            totalPages = in.readLong();
-            currentQuery = in.readString();
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeTypedList(photos);
-            dest.writeLong(currentPage);
-            dest.writeLong(totalPages);
-            dest.writeString(currentQuery);
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-    }
 }

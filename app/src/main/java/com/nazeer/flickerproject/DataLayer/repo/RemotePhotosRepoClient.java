@@ -40,6 +40,7 @@ public class RemotePhotosRepoClient implements PhotosRepoClient {
     private Map<String, Object> getStaticParamsMap() {
         HashMap<String, Object> ret = new HashMap<>();
         ret.put("nojsoncallback", 1);
+        ret.put("safe_search", 1);
         ret.put("format", "json");
         ret.put("api_key",api_key);
         ret.put("method",API_METHOD);

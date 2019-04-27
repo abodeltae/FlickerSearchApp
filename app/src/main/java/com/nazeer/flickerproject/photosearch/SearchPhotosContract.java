@@ -24,7 +24,6 @@ public class SearchPhotosContract {
 
         void showLoadingMore();
 
-        void hideLoadingMore();
 
         void showPhotos(List<Photo> photoList);
 

@@ -62,24 +62,21 @@ public class PhotoSearchView extends RelativeLayout implements SearchPhotosContr
 
     @Override
     public void showLoading() {
+        loadingMoreProgressBar.setVisibility(GONE);
         loadingProgressBar.setVisibility(VISIBLE);
     }
 
     @Override
     public void hideLoading() {
+        loadingMoreProgressBar.setVisibility(GONE);
         loadingProgressBar.setVisibility(GONE);
 
     }
 
     @Override
     public void showLoadingMore() {
+        loadingProgressBar.setVisibility(GONE);
         loadingMoreProgressBar.setVisibility(VISIBLE);
-
-    }
-
-    @Override
-    public void hideLoadingMore() {
-        loadingMoreProgressBar.setVisibility(GONE);
 
     }
 
