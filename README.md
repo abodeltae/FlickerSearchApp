@@ -1,4 +1,4 @@
-# <h1>Photo Search App Coding Challenge 
+# <h1>Photo Search App Challenge 
 This is a vanilla android application that does a simple task : 
   * Allow user to search Flickr photos by entring a search text.
   * Enable endless scrolling through photos as long there is more photos available.
