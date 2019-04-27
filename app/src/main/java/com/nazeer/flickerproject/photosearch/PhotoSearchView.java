@@ -102,11 +102,6 @@ public class PhotoSearchView extends RelativeLayout implements SearchPhotosContr
     }
 
     @Override
-    public void showInvalidQueryError() {
-        Toast.makeText(getContext(), R.string.invalid_query, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void showErrorFetchingData() {
         Toast.makeText(getContext(), R.string.error_fetching_photos, Toast.LENGTH_SHORT).show();
 

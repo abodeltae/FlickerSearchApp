@@ -1,13 +1,11 @@
 package com.nazeer.flickerproject.imageLoader;
 
-import android.graphics.Bitmap;
-
 import androidx.annotation.Nullable;
 
-public interface Cache {
+public interface Cache<T> {
 
     @Nullable
-    Bitmap get(String key);
+    T get(String key);
 
-    void put(String key, Bitmap bitmap);
+    void put(String key, T value);
 }

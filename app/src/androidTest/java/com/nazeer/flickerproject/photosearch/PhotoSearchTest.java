@@ -65,7 +65,7 @@ public class PhotoSearchTest {
         BooleanContainer exceededMaxRunning = new BooleanContainer();
         BooleanContainer reachedAllowedConcurrentTasks = new BooleanContainer();
 
-        Cache cache = new Cache() {
+        Cache<Bitmap> cache = new Cache<Bitmap>() {
             @Nullable
             @Override
             public Bitmap get(String key) {

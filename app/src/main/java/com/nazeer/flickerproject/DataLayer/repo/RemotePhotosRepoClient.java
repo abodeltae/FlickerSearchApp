@@ -15,7 +15,7 @@ public class RemotePhotosRepoClient implements PhotosRepoClient {
     private final AsyncHttpClient httpClient;
     private final PhotosListResponseProcessor processor;
     private final String baseUrl;
-    private  Map<String, Object> staticParams ;
+    private Map<String, Object> fixedParameters;
 
     private static final String PAGE_KEY = "page";
     private static final String QUERY_KEY = "text";
@@ -26,18 +26,18 @@ public class RemotePhotosRepoClient implements PhotosRepoClient {
         this.processor = processor;
         this.baseUrl = baseUrl;
         this.api_key = apiKey;
-        staticParams = getStaticParamsMap();
+        fixedParameters = getFixedParamsMap();
     }
 
     @Override
     public void getPhotos(long page, String query, SuccessFailureCallBack<PhotoListResponse> callBack) {
-        HashMap<String, Object> map = new HashMap<>(staticParams);
-        map.put(PAGE_KEY, page);
-        map.put(QUERY_KEY, query);
-        httpClient.asyncCallAPiLink(baseUrl, map, callBack, processor);
+        HashMap<String, Object> parameters = new HashMap<>(fixedParameters);
+        parameters.put(PAGE_KEY, page);
+        parameters.put(QUERY_KEY, query);
+        httpClient.asyncCallAPiLink(baseUrl, parameters, callBack, processor);
     }
 
-    private Map<String, Object> getStaticParamsMap() {
+    private Map<String, Object> getFixedParamsMap() {
         HashMap<String, Object> ret = new HashMap<>();
         ret.put("nojsoncallback", 1);
         ret.put("safe_search", 1);

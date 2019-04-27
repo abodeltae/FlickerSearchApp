@@ -15,7 +15,7 @@ import java.util.LinkedList;
 public class ImageLoaderImpl implements ImageLoader {
 
     private static final int DEFAULT_MAX_ALLOWED_DOWNLOAD_REQUESTS = 15;
-    private final Cache cache;
+    private final Cache<Bitmap> cache;
     private final AsyncBitmapDownloader asyncBitmapDownloader;
     // these maps map to images and urls for current downloads
     private HashMap<ImageView, String> imageViewToUrlMap = new HashMap<>();
@@ -25,11 +25,11 @@ public class ImageLoaderImpl implements ImageLoader {
     private int runningDownloadsCount = 0;
     private int maxAllowedRunningDownloads;
 
-    public ImageLoaderImpl(Cache cache, AsyncBitmapDownloader asyncBitmapDownloader) {
+    public ImageLoaderImpl(Cache<Bitmap> cache, AsyncBitmapDownloader asyncBitmapDownloader) {
         this(cache, asyncBitmapDownloader, DEFAULT_MAX_ALLOWED_DOWNLOAD_REQUESTS);
     }
 
-    public ImageLoaderImpl(Cache cache, AsyncBitmapDownloader asyncBitmapDownloader, int maxAllowedRunningDownloads) {
+    public ImageLoaderImpl(Cache<Bitmap> cache, AsyncBitmapDownloader asyncBitmapDownloader, int maxAllowedRunningDownloads) {
         this.cache = cache;
         this.asyncBitmapDownloader = asyncBitmapDownloader;
         this.maxAllowedRunningDownloads = maxAllowedRunningDownloads;

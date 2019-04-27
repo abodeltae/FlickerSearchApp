@@ -19,7 +19,7 @@ public class AsyncBitmapDownloaderImp implements AsyncBitmapDownloader {
         new NetworkAsyncTask<>(() -> getBitMapFromUrl(url), callBack).execute();
     }
 
-    private static Bitmap getBitMapFromUrl(String src) throws IOException {
+    private Bitmap getBitMapFromUrl(String src) throws IOException {
         URL url = new URL(src);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoInput(true);

@@ -31,8 +31,6 @@ public class SearchPhotosContract {
 
         void setDelegates(delegates delegates);
 
-        void showInvalidQueryError();
-
         void showErrorFetchingData();
 
         void setQuery(String currentQuery);
@@ -40,7 +38,6 @@ public class SearchPhotosContract {
 
     public interface delegates {
         void search(String text);
-
         void loadMore();
     }
 }

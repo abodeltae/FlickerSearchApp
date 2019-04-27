@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import java.lang.ref.SoftReference;
 
-public class InMemoryLRUCache implements Cache {
+public class InMemoryLRUCache implements Cache<Bitmap> {
     private static final int DEFAULT_MAX_SIZE = 100;
 
     private SizedLinkedHashMap<String, SoftReference<Bitmap>> lruCache;

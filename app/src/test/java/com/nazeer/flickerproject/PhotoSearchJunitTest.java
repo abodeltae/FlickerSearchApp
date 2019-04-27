@@ -71,10 +71,6 @@ public class PhotoSearchJunitTest {
                 delegatesObjectHolder.object = delegates;
             }
 
-            @Override
-            public void showInvalidQueryError() {
-
-            }
 
             @Override
             public void showErrorFetchingData() {
