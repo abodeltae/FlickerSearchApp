@@ -1,11 +1,10 @@
-package com.nazeer.flickerproject.DataLayer.httpClient;
+package com.nazeer.flickerproject.DataLayer.network.httpClient;
 
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import com.nazeer.flickerproject.CallBacks.SuccessFailureCallBack;
-import com.nazeer.flickerproject.DataLayer.JsonProcessors.JsonProcessor;
-import com.nazeer.flickerproject.DataLayer.NetworkAsyncTask;
+import com.nazeer.flickerproject.DataLayer.json.JsonProcessor;
+import com.nazeer.flickerproject.DataLayer.network.NetworkAsyncTask;
 
 import org.json.JSONException;
 
@@ -24,7 +23,7 @@ public class AsyncHttpClientImp implements AsyncHttpClient {
                                      Map<String, Object> params,
                                      final SuccessFailureCallBack<T> callBack,
                                      final JsonProcessor<T> processor) {
-        new NetworkAsyncTask<T>(() -> readFromApiLink(link, params, processor), callBack).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new NetworkAsyncTask<>(() -> readFromApiLink(link, params, processor), callBack).execute();
     }
 
     private <T> T readFromApiLink(String link, Map<String, Object> params, JsonProcessor<T> processor) throws IOException, JSONException {

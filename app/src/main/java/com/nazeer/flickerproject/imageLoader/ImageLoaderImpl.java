@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import androidx.annotation.DrawableRes;
 
 import com.nazeer.flickerproject.CallBacks.SuccessFailureCallBack;
-import com.nazeer.flickerproject.DataLayer.BitmapDownloader.AsyncBitmapDownloader;
+import com.nazeer.flickerproject.DataLayer.network.BitmapDownloader.AsyncBitmapDownloader;
 
 import java.util.HashMap;
 import java.util.LinkedList;

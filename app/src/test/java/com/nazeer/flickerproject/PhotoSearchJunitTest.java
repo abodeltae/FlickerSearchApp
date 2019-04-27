@@ -1,6 +1,6 @@
 package com.nazeer.flickerproject;
 
-import com.nazeer.flickerproject.DataLayer.JsonProcessors.PhotosListResponseProcessor;
+import com.nazeer.flickerproject.DataLayer.json.PhotosListResponseProcessor;
 import com.nazeer.flickerproject.DataLayer.models.Photo;
 import com.nazeer.flickerproject.DataLayer.models.PhotoListResponse;
 import com.nazeer.flickerproject.DataLayer.repo.PhotosRepo;

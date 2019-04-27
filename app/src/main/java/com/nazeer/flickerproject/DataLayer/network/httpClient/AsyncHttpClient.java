@@ -1,7 +1,7 @@
-package com.nazeer.flickerproject.DataLayer.httpClient;
+package com.nazeer.flickerproject.DataLayer.network.httpClient;
 
 import com.nazeer.flickerproject.CallBacks.SuccessFailureCallBack;
-import com.nazeer.flickerproject.DataLayer.JsonProcessors.JsonProcessor;
+import com.nazeer.flickerproject.DataLayer.json.JsonProcessor;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.nazeer.flickerproject.DataLayer.JsonProcessors;
+package com.nazeer.flickerproject.DataLayer.json;
 
 import com.nazeer.flickerproject.DataLayer.models.Photo;
 import com.nazeer.flickerproject.DataLayer.models.PhotoListResponse;
@@ -16,7 +16,8 @@ public class PhotosListResponseProcessor implements JsonProcessor<PhotoListRespo
 		JSONObject jsonObject =new JSONObject(jsonString);
 		return process(jsonObject.getJSONObject("photos"));
 	}
-	public PhotoListResponse process(JSONObject jsonObject) throws JSONException {
+
+	private PhotoListResponse process(JSONObject jsonObject) throws JSONException {
 		long pages = jsonObject.getLong("pages");
 		long page = jsonObject.getLong("page");
 		JSONArray jsonArray = jsonObject.getJSONArray("photo");

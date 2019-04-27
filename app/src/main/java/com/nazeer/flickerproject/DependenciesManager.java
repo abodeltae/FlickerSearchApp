@@ -1,11 +1,11 @@
 package com.nazeer.flickerproject;
 
-import com.nazeer.flickerproject.DataLayer.BitmapDownloader.AsyncBitmapDownloader;
-import com.nazeer.flickerproject.DataLayer.BitmapDownloader.AsyncBitmapDownloaderImp;
-import com.nazeer.flickerproject.DataLayer.DataLayerConfigs;
-import com.nazeer.flickerproject.DataLayer.JsonProcessors.PhotosListResponseProcessor;
-import com.nazeer.flickerproject.DataLayer.httpClient.AsyncHttpClient;
-import com.nazeer.flickerproject.DataLayer.httpClient.AsyncHttpClientImp;
+import com.nazeer.flickerproject.DataLayer.json.PhotosListResponseProcessor;
+import com.nazeer.flickerproject.DataLayer.network.ApiConfigs;
+import com.nazeer.flickerproject.DataLayer.network.BitmapDownloader.AsyncBitmapDownloader;
+import com.nazeer.flickerproject.DataLayer.network.BitmapDownloader.AsyncBitmapDownloaderImp;
+import com.nazeer.flickerproject.DataLayer.network.httpClient.AsyncHttpClient;
+import com.nazeer.flickerproject.DataLayer.network.httpClient.AsyncHttpClientImp;
 import com.nazeer.flickerproject.DataLayer.repo.PhotosRepo;
 import com.nazeer.flickerproject.DataLayer.repo.PhotosRepoClient;
 import com.nazeer.flickerproject.DataLayer.repo.PhotosRepoImp;
@@ -35,10 +35,10 @@ public class DependenciesManager {
 
     private   PhotosRepo getPhotosRepo(){
         if(repo != null)return repo;
-        DataLayerConfigs dataLayerConfigs =new DataLayerConfigs();
+        ApiConfigs apiConfigs = new ApiConfigs();
         AsyncHttpClient httpClient = new AsyncHttpClientImp();
         PhotosListResponseProcessor processor =new PhotosListResponseProcessor();
-        PhotosRepoClient remoteClient = new RemotePhotosRepoClient(dataLayerConfigs.getApiKey(),httpClient,processor, dataLayerConfigs.getBaseUrl());
+        PhotosRepoClient remoteClient = new RemotePhotosRepoClient(apiConfigs.getApiKey(), httpClient, processor, apiConfigs.getBaseUrl());
         repo = new PhotosRepoImp(remoteClient);
         return repo;
     }

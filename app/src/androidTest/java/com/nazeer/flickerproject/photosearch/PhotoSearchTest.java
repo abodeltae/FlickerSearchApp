@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.nazeer.flickerproject.DataLayer.BitmapDownloader.AsyncBitmapDownloader;
 import com.nazeer.flickerproject.DataLayer.models.Photo;
+import com.nazeer.flickerproject.DataLayer.network.BitmapDownloader.AsyncBitmapDownloader;
 import com.nazeer.flickerproject.imageLoader.Cache;
 import com.nazeer.flickerproject.imageLoader.ImageLoaderImpl;
 import com.nazeer.flickerproject.imageLoader.InMemoryLRUCache;

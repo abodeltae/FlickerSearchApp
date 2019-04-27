@@ -1,9 +1,9 @@
 package com.nazeer.flickerproject.DataLayer.repo;
 
 import com.nazeer.flickerproject.CallBacks.SuccessFailureCallBack;
-import com.nazeer.flickerproject.DataLayer.JsonProcessors.PhotosListResponseProcessor;
-import com.nazeer.flickerproject.DataLayer.httpClient.AsyncHttpClient;
+import com.nazeer.flickerproject.DataLayer.json.PhotosListResponseProcessor;
 import com.nazeer.flickerproject.DataLayer.models.PhotoListResponse;
+import com.nazeer.flickerproject.DataLayer.network.httpClient.AsyncHttpClient;
 
 import java.util.HashMap;
 import java.util.Map;

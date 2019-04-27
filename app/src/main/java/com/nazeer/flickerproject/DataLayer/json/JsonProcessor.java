@@ -1,4 +1,4 @@
-package com.nazeer.flickerproject.DataLayer.JsonProcessors;
+package com.nazeer.flickerproject.DataLayer.json;
 
 import org.json.JSONException;
 

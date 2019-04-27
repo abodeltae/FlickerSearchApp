@@ -1,12 +1,10 @@
-package com.nazeer.flickerproject.DataLayer.BitmapDownloader;
+package com.nazeer.flickerproject.DataLayer.network.BitmapDownloader;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-
 
 import com.nazeer.flickerproject.CallBacks.SuccessFailureCallBack;
-import com.nazeer.flickerproject.DataLayer.NetworkAsyncTask;
+import com.nazeer.flickerproject.DataLayer.network.NetworkAsyncTask;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +16,7 @@ public class AsyncBitmapDownloaderImp implements AsyncBitmapDownloader {
 
     @Override
     public void getBitMapFromUrl(String url, SuccessFailureCallBack<Bitmap> callBack) {
-        new NetworkAsyncTask<>(()->getBitMapFromUrl(url) ,callBack).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new NetworkAsyncTask<>(() -> getBitMapFromUrl(url), callBack).execute();
     }
 
     private static Bitmap getBitMapFromUrl(String src) throws IOException {
