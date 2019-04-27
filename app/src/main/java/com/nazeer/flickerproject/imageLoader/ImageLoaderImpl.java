@@ -14,7 +14,7 @@ import java.util.LinkedList;
 
 public class ImageLoaderImpl implements ImageLoader {
 
-    private static final int DEFAULT_MAX_ALLOWED_DOWNLOAD_REQUESTS = 15;
+    private static final int DEFAULT_MAX_ALLOWED_DOWNLOAD_REQUESTS = 8;
     private final Cache<Bitmap> cache;
     private final AsyncBitmapDownloader asyncBitmapDownloader;
     // these maps map to images and urls for current downloads
@@ -48,7 +48,7 @@ public class ImageLoaderImpl implements ImageLoader {
             if (runningDownloadsCount >= maxAllowedRunningDownloads) {
                 requestsHolder.add(new LoadRequest(imageView, url, placeHolderRes));
                 if (requestsHolder.size() > maxAllowedRunningDownloads) {
-                    requestsHolder.removeLast();
+                    requestsHolder.removeFirst();
                 }
             } else {
                 showFromWeb(imageView, url, placeHolderRes);
