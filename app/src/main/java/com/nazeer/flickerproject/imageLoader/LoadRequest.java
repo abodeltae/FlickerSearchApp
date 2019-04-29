@@ -4,27 +4,29 @@ import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
 
-public class LoadRequest {
-    private ImageView imageView;
+import java.lang.ref.WeakReference;
+
+class LoadRequest {
+    private WeakReference<ImageView> imageViewRef;
     private String url;
     @DrawableRes
     private int resId;
 
-    public LoadRequest(ImageView imageView, String url, int resId) {
-        this.imageView = imageView;
+    LoadRequest(ImageView imageView, String url, int resId) {
+        this.imageViewRef = new WeakReference<>(imageView);
         this.url = url;
         this.resId = resId;
     }
 
-    public ImageView getImageView() {
-        return imageView;
+    ImageView getImageView() {
+        return imageViewRef.get();
     }
 
-    public String getUrl() {
+    String getUrl() {
         return url;
     }
 
-    public int getResId() {
+    int getResId() {
         return resId;
     }
 }
