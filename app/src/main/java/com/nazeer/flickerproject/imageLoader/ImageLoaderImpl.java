@@ -97,7 +97,7 @@ public class ImageLoaderImpl implements ImageLoader {
 
     private void popRequests() {
         while (runningDownloadsCount < maxAllowedRunningDownloads && !requestsHolder.isEmpty()) {
-            LoadRequest request = requestsHolder.pollLast();
+            LoadRequest request = requestsHolder.pollFirst();
             ImageView imageView = request.getImageView();
             if (imageView != null) {
                 showFromWeb(request.getImageView(), request.getUrl(), request.getResId());
